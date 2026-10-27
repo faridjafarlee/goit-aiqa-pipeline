@@ -1,53 +1,45 @@
 # KAN Jira Field Maps
 
-Фіксовані карти полів для проєкту KAN (навчальна Jira `neoversity-ak.atlassian.net`).
-Не перевідкривай карти щоразу, використовуй їх як є.
+Карти полів для проєкту KAN "QA pipeline" у навчальній Jira `neoversity-ak.atlassian.net`
+(cloudId `cd52b9dc-9af2-4871-b83e-93ea86ecb36c`). Використовуй їх як є, не перевідкривай метадані на кожному запуску.
 
-> Ідентифікатори кастомних полів (`customfield_XXXXX`) унікальні для інстансу. Їх зібрано
-> одноразово через Atlassian MCP (`getJiraIssueTypeMetaWithFields` для проєкту KAN і кожного
-> типу задачі). Якщо поле з карти перестало повертатися, онови карту і не вгадуй ID.
-> Статус заповнення: стандартні поля підтверджено, кастомні треба заповнити після підключення MCP
-> (див. розділ «Кастомні поля KAN»).
+Карти перевірено 2026-10-27 через Atlassian MCP `getJiraIssueTypeMetaWithFields` для проєкту KAN.
+Типи задач у проєкті: Epic (10005), Subtask (10006), Task (10007). Story і Bug у KAN немає.
+Кастомних полів для вимог (User story, Acceptance criteria, Notes for QA) у KAN немає:
+опис, критерії приймання й таблиці лежать у системному полі `description`.
 
-Для всіх типів не читай службові поля-лічильники й PM-дані: story points, sprint, assignee,
-reporter, priority, status, labels, дати, поле-лічильник коментарів (якщо є в інстансі).
+Якщо поле з карти перестало повертатися, онови карту після нової перевірки метаданих. ID не вгадуй.
 
-## Task
+## Що не читати
 
-| Значення | Ключ поля | Обовʼязкове |
-|---|---|---|
-| Назва | summary | - |
-| Опис | description | так |
-| Критерії приймання | `<ID з метаданих KAN>` (якщо окреме поле) | ні |
-| Коментарі | comment | ні |
-| Вкладення | attachment | ні |
-| Повʼязані задачі | issuelinks, parent | ні (лише фон) |
+Для всіх типів не запитуй і не переноси у файл PM-дані й службові поля:
+assignee, reporter, priority, status, labels, fixVersions, duedate, created, updated,
+`customfield_10000` (development), `customfield_10001` (Team), `customfield_10015` (Start date),
+`customfield_10019` (Rank), `customfield_10021` (Flagged), `customfield_10037` (Vulnerability).
 
-## Story
+Не запитуй `customfield_10923`, `customfield_10594`, `customfield_10424`, `customfield_11717`.
+Їх запитував скіл з уроку 2 для KAN-4, але у метаданих KAN цих полів немає, тож вони завжди порожні.
+
+## Task (10007)
 
 | Значення | Ключ поля | Обовʼязкове |
 |---|---|---|
-| Назва | summary | - |
-| Опис | description | так |
-| User story | `<ID з метаданих KAN>` | ні |
-| Критерії приймання | `<ID з метаданих KAN>` | ні |
+| Назва | summary | так |
+| Опис (вимоги, AC, таблиці) | description | так |
+| Тип задачі | issuetype | так (для маршрутизації) |
 | Коментарі | comment | ні |
 | Вкладення | attachment | ні |
-| Повʼязані задачі | issuelinks, parent | ні (лише фон) |
+| Повʼязані задачі | issuelinks | ні (лише фон) |
+| Батьківська задача (епік) | parent | ні (лише фон) |
 
-## Bug
+Запит: `fields: ["summary", "description", "issuetype", "comment", "attachment", "issuelinks", "parent"]`.
 
-| Значення | Ключ поля | Обовʼязкове |
-|---|---|---|
-| Назва | summary | - |
-| Опис бага | description (або `<ID поля Bug Description>`) | так |
-| Кроки / Actual / Expected | у складі опису | - |
-| Коментарі | comment | ні |
-| Вкладення | attachment | ні |
-| Повʼязані задачі | issuelinks, parent | ні (лише фон) |
+## Subtask (10006)
 
-## Кастомні поля KAN
+Ті самі поля, що й у Task. `parent` у Subtask обовʼязковий у Jira, але для контексту це лише фон:
+вимоги батьківської задачі в контекст підзадачі не переносяться.
 
-Під час демонстрації в уроці 2 для KAN-4 кастомні поля `customfield_10923`, `customfield_10924`,
-`customfield_10424`, `customfield_11717` повернулися порожніми, а всі дані задачі були в `description`.
-Їхні назви підтвердити через `getJiraIssueTypeMetaWithFields` і внести в таблиці вище.
+## Epic (10005) та інші типи
+
+Карти немає. Епік обʼєднує кілька задач, а один контекст-файл відповідає одній задачі.
+Зупинись і попроси ключ конкретної задачі (Task або Subtask).
