@@ -13,7 +13,7 @@ KAN-7 "[Jafarli] Password Recovery: Forgot Password and Reset Link"
 - `skills/jira-task-context/SKILL.md`: сам скіл.
 - `skills/jira-task-context/references/field-maps.md`: карта полів Jira для типів задач проєкту KAN. Я зібрав її через MCP з метаданих проєкту: у KAN є Task і Subtask, вимоги лежать у полі `description`, окремих кастомних полів для AC немає.
 - `skills/jira-task-context/references/output-template.md`: структура контекст-файлу.
-- `skills/jira-task-context/references/context-example.md`: приклад готового файлу, щоб скіл тримав однаковий рівень деталізації.
+- `skills/jira-task-context/references/context-example.md`: еталонний контекст-файл, зроблений на реальній задачі KAN-7 і звірений з Jira, щоб скіл тримав однаковий рівень деталізації.
 - `skills/references/language-rule.md`: мова скіла, спільна для всіх скілів пайплайну.
 - `Task Runs/KAN-7/KAN-7-context.md`: контекст-файл, отриманий під час запуску.
 
